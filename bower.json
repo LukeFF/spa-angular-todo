@@ -1,0 +1,26 @@
+{
+  "name": "spa-angular-todo",
+  "version": "0.1.0",
+  "description": "a simple todo app with angularjs",
+  "main": "index.html",
+  "authors": [
+    "Lukas Thoma <lukasthoma@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-material": "~0.8.3",
+    "angular": "~1.3.14",
+    "font-awesome": "~4.3.0",
+    "angular-local-storage": "~0.1.5",
+    "hammerjs": "~2.0.4",
+    "angular-route": "~1.3.15"
+  }
+}

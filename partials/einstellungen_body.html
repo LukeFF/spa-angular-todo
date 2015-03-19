@@ -1,0 +1,27 @@
+<md-toolbar layout="row">
+  <h2 class="md-toolbar-tools">Einstellungen</h2>
+</md-toolbar>
+<div layout="row" flex>
+  <md-content layout="column" flex>
+    <md-list layout-fill>
+      <md-item>
+        <md-item-content>
+          <div class="md-tile-left">
+            <i class="fa fa-user"></i>
+          </div>
+          <div class="md-tile-content" flex>
+            <md-input-container>
+              <label>Beutzername</label>
+              <input ng-model="config.user" placeholder="wie heißt der Benutzer der Todo-Liste?">
+            </md-input-container>
+
+          </div>
+          <div class="md-tile-right" style="padding-right:16px;">
+
+          </div>
+        </md-item-content>
+        <md-divider></md-divider>
+      </md-item>
+    </md-list>
+  </md-content>
+</div>

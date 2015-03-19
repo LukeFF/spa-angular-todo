@@ -1,0 +1,15 @@
+{
+  "name": "spa-angular-todo",
+  "version": "0.1.0",
+  "description": "a simple todo app with angular",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "http-server ./"
+  },
+  "author": "Lukas Thoma <lukasthoma@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "http-server": "~0.7.5"
+  }
+}
