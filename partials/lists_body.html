@@ -1,45 +1,40 @@
-<md-toolbar layout="row">
-  <md-button aria-label="Menu einblenden" hide-gt-sm ng-click="toggleLeftMenu()" id="menuButton"><i class="fa fa-list"></i></md-button>
-  <form ng-submit="addTodo()" flex>
-    <md-input-container>
-      <label>Aufgabe in {{lists[selectedTab].name}} eintragen</label>
-      <input ng-model="newTodo" placeholder="Was gibt's zu tun?">
-    </md-input-container>
-  </form>
-</md-toolbar>
-<div layout="row" flex>
-  <md-content layout="column" flex>
-    <div ng-show="lists.length">
-      <md-tabs md-selected="selectedTab" flex>
-        <md-tab ng-repeat="list in lists" label="{{list.name}} ({{list.todos.length}})">
-          <div layout="column" layout-align="start center">
-            <div id="toolbar-top" layout="row" layout-fill>
-              <md-checkbox ng-model="allDone" ng-change="markAll(allDone)" aria-label="Alle Aufgaben als erledigt markieren" flex>
-                Alle Aufgaben als erledigt markieren
-              </md-checkbox>
-            </div>
-            <md-list layout-fill>
-              <md-item ng-repeat="todo in list.todos" ng-class="{completed: todo.done, editing: todo == editedTodo}">
-                <md-item-content>
-                  <div class="md-tile-content" flex>
-                    <md-checkbox ng-model="todo.done" ng-change="todoCompleted(todo)" arial-label="erledigt">{{todo.task}}</md-checkbox>
-                    <!--form ng-submit="doneEditing(todo)">
+<form ng-submit="addTodo()" flex>
+  <md-input-container style="border-bottom: 1px solid rgba(0,0,0,0.12); padding-bottom: 6px;">
+    <label>Aufgabe in {{lists[selectedTab].name}} eintragen</label>
+    <input ng-model="newTodo" placeholder="Was gibt's zu tun?">
+  </md-input-container>
+</form>
+<div ng-show="lists.length">
+  <md-tabs md-selected="selectedTab" flex>
+    <md-tab ng-repeat="list in lists" label="{{list.name}} ({{list.todos.length}})">
+      <div layout="column" layout-align="start center" md-swipe-left="nextTab()" md-swipe-right="previousTab()">
+        <div id="toolbar-top" layout="row" layout-fill>
+          <md-checkbox ng-model="allDone" ng-change="markAll(allDone)" aria-label="Alle Aufgaben als erledigt markieren" flex>
+            Alle Aufgaben als erledigt markieren
+          </md-checkbox>
+        </div>
+        <md-list layout-fill>
+          <md-item ng-repeat="todo in list.todos" ng-class="{completed: todo.done, editing: todo == editedTodo}">
+            <md-item-content>
+              <div class="md-tile-content" flex>
+                <md-checkbox ng-model="todo.done" ng-change="todoCompleted(todo)" arial-label="erledigt">{{todo.task}}</md-checkbox>
+                <!--form ng-submit="doneEditing(todo)">
                                         <input class="edit" ng-trim="false" ng-model="todo.name" ng-blur="doneEditing(todo)" todo-escape="revertEditing(todo)" todo-focus="todo == editedTodo">
                                       </form-->
-                  </div>
-                  <div class="md-tile-right" style="padding-right:16px;">
-                    <md-button ng-click="editTodo($index)" aria-label="bearbeiten"><i class="fa fa-edit fa-2x"></i></md-button>
-                    <md-button ng-click="deleteTodo($index)" aria-label="löschen" class="md-warn"><i class="fa fa-times fa-2x"></i></md-button>
-                  </div>
-                </md-item-content>
-                <md-divider></md-divider>
-              </md-item>
-            </md-list>
-          </div>
-        </md-tab>
-      </md-tabs>
-    </div>
-    <md-button class="md-warn"><i class="fa fa-trash-o"></i> Erledigte Aufgaben löschen</md-button>
-    <md-button class="md-warn" ng-click="deleteList($event)"><i class="fa fa-trash"></i> Liste löschen</md-button>
-  </md-content>
+              </div>
+              <div class="md-tile-right" style="padding-right:16px;">
+                <md-button ng-click="editTodo($index)" aria-label="bearbeiten"><i class="fa fa-edit fa-2x"></i></md-button>
+                <md-button ng-click="deleteTodo($index)" aria-label="löschen" class="md-warn"><i class="fa fa-times fa-2x"></i></md-button>
+              </div>
+            </md-item-content>
+            <md-divider></md-divider>
+          </md-item>
+        </md-list>
+        <div id="toolbar-top" layout="row" layout-align="space-around center" layout-fill>
+          <md-button class="md-warn" ng-click="deleteDoneTodos($event)"><i class="fa fa-trash-o"></i> Erledigte Aufgaben löschen</md-button>
+          <md-button class="md-warn" ng-click="deleteList($event)"><i class="fa fa-trash"></i> Liste löschen</md-button>
+        </div>
+      </div>
+    </md-tab>
+  </md-tabs>
 </div>
