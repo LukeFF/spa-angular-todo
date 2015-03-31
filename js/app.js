@@ -2,6 +2,7 @@
 
 var app = angular.module('todoList', ['ngRoute', 'ngMaterial', 'LocalStorageModule']);
 
+// Angular Routing = Navigation. Lädt beim Klick von Links die jeweilige Seite nach & fügt sie in den DOM ein
 app.config(function($routeProvider, $mdThemingProvider) {
   $routeProvider
     .when('/', {
@@ -47,26 +48,31 @@ app.directive('activeMenu', ['$location', function($location) {
   };
 }]);
 
+// Controller der App
 app.controller('TodoCtrl', function($scope, $mdSidenav, $mdDialog, localStorageService) {
 
+  // Initialisiert Default-Werte bei erstem Aufruf, wenn keine gespeicherten Daten gefunden
   $scope.init = function() {
     if (!localStorageService.get('todoList')) {
       $scope.lists = [{
         name: 'Projektarbeit SPA',
         todos: [{
-          task: 'Create an Angular-js TodoList',
-          done: false
-        }, {
-          task: 'Understanding Angular-js Directives',
+          task: 'nach Weingarten fahren',
           done: true
+        }, {
+          task: 'Projektarbeit abgeben',
+          done: false
         }]
       }, {
         name: 'Bachelorarbeit',
         todos: [{
-          task: 'Build an open-source website builder',
+            task: 'Thema suchen',
+            done: true
+          },{
+          task: 'Anmelden',
           done: false
         }, {
-          task: 'BUild an Email Builder',
+          task: 'Schreiben',
           done: false
         }]
       }];
@@ -88,6 +94,7 @@ app.controller('TodoCtrl', function($scope, $mdSidenav, $mdDialog, localStorageS
     $mdSidenav('left').toggle();
   };
 
+  // Aufgabe in aktuell aktive Liste eintragen
   $scope.addTodo = function() {
     var newTodo = $scope.newTodo.trim();
     if (newTodo.length == 0) {
@@ -100,6 +107,7 @@ app.controller('TodoCtrl', function($scope, $mdSidenav, $mdDialog, localStorageS
     $scope.newTodo = '';
   };
 
+  // neue Liste erstellen
   $scope.addList = function() {
     var newList = $scope.newList.trim();
     if (newList.length == 0) {
@@ -115,23 +123,6 @@ app.controller('TodoCtrl', function($scope, $mdSidenav, $mdDialog, localStorageS
   // Löscht Todo aus aktuell aktiver Liste
   $scope.deleteTodo = function(index) {
     $scope.lists[$scope.selectedTab].todos.splice(index, 1);
-  };
-
-  $scope.deleteDoneTodos = function(ev) {
-    var confirm = $mdDialog.confirm()
-      .title('Erledigte Aufgaben löschen?')
-      .content('Sollen alle erledigten Aufgaben in Liste ' + $scope.lists[$scope.selectedTab].name + ' gelöscht werden?')
-      .ariaLabel('Erledigte Aufgaben löschen?')
-      .ok('Aufgaben löschen')
-      .cancel('Abbrechen')
-      .targetEvent(ev);
-    $mdDialog.show(confirm).then(function() {
-      $scope.lists[$scope.selectedTab].todos.forEach(function(todo, index) {
-        if (todo.done == true) {
-          //delete todo;
-        }
-      });
-    });
   };
 
   // Löscht aktuell aktive Liste nachdem Dialog bestätigt wird
@@ -165,17 +156,11 @@ app.controller('TodoCtrl', function($scope, $mdSidenav, $mdDialog, localStorageS
     $scope.selectedTab = Math.max($scope.selectedTab - 1, 0);
   };
 
-  $scope.$watch('model', function(newVal, oldVal) {
+  // Überwacht Änderungen an todoList im DOM und speichert diese autom. in LocalStorage
+  $scope.$watch('lists', function(newVal, oldVal) {
     if (newVal !== null && angular.isDefined(newVal) && newVal !== oldVal) {
       localStorageService.add('todoList', angular.toJson(newVal));
     }
   }, true);
-
-});
-
-app.controller('SettingsCtrl', function() {
-  $scope.saveConfig = function() {
-
-  };
 
 });
